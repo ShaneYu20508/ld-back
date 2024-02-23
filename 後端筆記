@@ -1,0 +1,35 @@
+在 back 資料夾內新增一個 .env 檔
+DB_URL=(mongodb的網址加上當天日期)
+JWT_SECRET=(當天日期)
+
+在 back 資料夾內新增 models 資料夾(定義資料欄位)
+    users.js (使用者)
+    新增 enums 資料夾 新增 UserRole.js 檔案設定使用者權限
+    並且在 user.js 最上層引入
+
+在 back 資料夾內新增 passsport(驗證) 資料夾
+    passport.js
+
+在 back 資料夾內新增 middlewares(功能) 資料夾
+    auth.js(登入)
+
+在 back 資料夾內新增 controllers(控制) 資料夾
+    users.js(登入，註冊)
+
+在 back 資料夾內新增 routes(路由) 資料夾
+    users.js(使用者功能)
+
+最外層新增 index.js(寫入資料) 檔案
+
+models 檔案
+    新增 products.js(商品)
+
+middlewares(功能) 資料夾
+    新增 upload.js(上傳)
+    新增 admin.js(判斷權限)
+
+controllers 資料夾
+    新增 product.js(商品管理) 檔案
+
+routes(路由) 資料夾
+    新增 products.js(產品)

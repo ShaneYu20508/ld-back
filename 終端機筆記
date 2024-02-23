@@ -1,0 +1,24 @@
+# 終端機
+npm init --yes
+
+npm i [
+express (網頁server)
+mongoose (連資料庫)
+dotenv (讀取環境設定檔)
+validator (信箱及其他驗證)
+passport (驗證)
+passport-jwt (jwt 身份驗證)
+passport-local (帳號密碼驗證)
+bcrypt (加密)
+cors (才能串前端)
+multer (檔案上傳)
+multer-storage-cloudinary (檔案上傳)
+http-status-codes (http 狀態碼套件) (可不裝) 
+]
+
+npm i -D eslint nodemon
+npx eslint --init (設定 eslint)
+
+設定完成後更改 .json 檔
+最上排新增 "type": "module",
+scripts 更改為 "dev": "nodemon index.js"
