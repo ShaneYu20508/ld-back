@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import routeUsers from './routes/users.js'
 import routeMissions from './routes/missions.js'
+import routeMailmans from './routes/mailmans.js'
 import { StatusCodes } from 'http-status-codes'
 import './passport/passport.js'
 
@@ -42,6 +43,7 @@ app.use((_, req, res, next) => {
 // 如果請求成功到這行就會進去了
 app.use('/users', routeUsers)
 app.use('/missions', routeMissions)
+app.use('/mailmans', routeMailmans)
 
 // 代表所有請求方式
 // * 代表任意路徑

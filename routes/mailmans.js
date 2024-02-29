@@ -9,7 +9,7 @@ const router = Router()
 router.post('/', upload, create)
 router.get('/all', auth.jwt, admin, getAll)
 router.patch('/:id', auth.jwt, admin, upload, edit)
-router.get('/',auth.jwt, get)
+router.get('/', auth.jwt, get)
 router.get('/:id', getId)
 
 export default router

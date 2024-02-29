@@ -100,7 +100,7 @@ export const get = async (req, res) => {
       .limit(itemsPerPage === -1 ? undefined : itemsPerPage)
 
     // countDocuments() 依照 () 內篩選計算總資料數
-    const total = await mailmans.countDocuments({pass: true})
+    const total = await mailmans.countDocuments({ pass: true })
     res.status(StatusCodes.OK).json({
       success: true,
       message: '',
