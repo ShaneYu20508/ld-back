@@ -1,11 +1,11 @@
-import missions from '../models/missions.js'
+import mailmans from '../models/mailmans.js'
 import { StatusCodes } from 'http-status-codes'
 import validator from 'validator'
 
 export const create = async (req, res) => {
   try {
     req.body.image = req.file.path
-    const result = await missions.create(req.body)
+    const result = await mailmans.create(req.body)
     res.status(StatusCodes.OK).json({
       success: true,
       message: '',
@@ -36,11 +36,11 @@ export const getAll = async (req, res) => {
     const page = parseInt(req.query.page) || 1
     const regex = new RegExp(req.query.search || '', 'i')
 
-    const data = await missions
+    const data = await mailmans
       .find({
         $or: [
-          { name: regex },
-          { description: regex }
+          { code: regex },
+          { skills: regex }
         ]
       })
       // const text = 'a'
@@ -55,7 +55,7 @@ export const getAll = async (req, res) => {
       .limit(itemsPerPage === -1 ? undefined : itemsPerPage)
 
     // estimatedDocumentCount() 計算總資料數
-    const total = await missions.estimatedDocumentCount()
+    const total = await mailmans.estimatedDocumentCount()
     res.status(StatusCodes.OK).json({
       success: true,
       message: '',
@@ -80,12 +80,12 @@ export const get = async (req, res) => {
     const page = parseInt(req.query.page) || 1
     const regex = new RegExp(req.query.search || '', 'i')
 
-    const data = await missions
+    const data = await mailmans
       .find({
-        status: '公開',
+        pass: true,
         $or: [
-          { title: regex },
-          { description: regex }
+          { code: regex },
+          { skills: regex }
         ]
       })
       // const text = 'a'
@@ -100,7 +100,7 @@ export const get = async (req, res) => {
       .limit(itemsPerPage === -1 ? undefined : itemsPerPage)
 
     // countDocuments() 依照 () 內篩選計算總資料數
-    const total = await missions.countDocuments({ sell: true })
+    const total = await mailmans.countDocuments({pass: true})
     res.status(StatusCodes.OK).json({
       success: true,
       message: '',
@@ -121,7 +121,7 @@ export const getId = async (req, res) => {
   try {
     if (!validator.isMongoId(req.params.id)) throw new Error('ID')
 
-    const result = await missions.findById(req.params.id)
+    const result = await mailmans.findById(req.params.id)
 
     if (!result) throw new Error('NOT FOUND')
 
@@ -155,7 +155,7 @@ export const edit = async (req, res) => {
     if (!validator.isMongoId(req.params.id)) throw new Error('ID')
 
     req.body.image = req.file?.path
-    await missions.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }).orFail(new Error('NOT FOUND'))
+    await mailmans.findByIdAndUpdate(req.params.id, req.body, { runValidators: true }).orFail(new Error('NOT FOUND'))
 
     res.status(StatusCodes.OK).json({
       success: true,

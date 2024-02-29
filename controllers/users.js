@@ -1,7 +1,7 @@
 import users from '../models/users.js'
 import { StatusCodes } from 'http-status-codes'
 import jwt from 'jsonwebtoken'
-import products from '../models/products.js'
+import missions from '../models/missions.js'
 import validator from 'validator'
 
 export const create = async (req, res) => {
@@ -115,10 +115,10 @@ export const getProfile = (req, res) => {
 export const editCart = async (req, res) => {
   try {
     // 檢查商品 id 格式對不對
-    if (!validator.isMongoId(req.body.product)) throw new Error('ID')
+    if (!validator.isMongoId(req.body.mission)) throw new Error('ID')
 
     // 尋找購物車內有沒有傳入的商品 ID
-    const idx = req.user.cart.findIndex(item => item.product.toString() === req.body.product)
+    const idx = req.user.cart.findIndex(item => item.mission.toString() === req.body.mission)
     if (idx > -1) {
       // 修改購物車內已有的商品數量
       const quantity = req.user.cart[idx].quantity + parseInt(req.body.quantity)
@@ -132,12 +132,12 @@ export const editCart = async (req, res) => {
       }
     } else {
       // 檢查商品是否存在或已下架
-      const product = await products.findById(req.body.product).orFail(new Error('NOT FOUND'))
-      if (!product.sell) {
+      const mission = await missions.findById(req.body.mission).orFail(new Error('NOT FOUND'))
+      if (mission.status !== '公開') {
         throw new Error('NOT FOUND')
       } else {
         req.user.cart.push({
-          product: product._id,
+          mission: mission._id,
           quantity: req.body.quantity
         })
       }
@@ -178,7 +178,7 @@ export const editCart = async (req, res) => {
 
 export const getCart = async (req, res) => {
   try {
-    const result = await users.findById(req.user._id, 'cart').populate('cart.product')
+    const result = await users.findById(req.user._id, 'cart').populate('cart.mission')
     res.status(StatusCodes.OK).json({
       success: true,
       message: '',
